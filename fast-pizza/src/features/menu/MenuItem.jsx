@@ -2,10 +2,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, getCurrentQuantityById } from "../../features/cart/cartSlice";
 import Button from "../../ui/Button";
+import UpdateItemQuantity from "../cart/UpdateItemQuantity";
 import { formatCurrency } from "../../utils/helpers";
 
 function MenuItem({ pizza }) {
-  // eslint-disable-next-line no-unused-vars
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
   const dispatch = useDispatch();
   const currentQuantity = useSelector(getCurrentQuantityById(id));
@@ -48,6 +48,9 @@ function MenuItem({ pizza }) {
             <Button type="small" onClick={handleAddtoCart}>
               Add to cart
             </Button>
+          )}
+          {isInCart && (
+            <UpdateItemQuantity pizzaId={id} currentQuantity={currentQuantity}/>
           )}
         </div>
       </div>
