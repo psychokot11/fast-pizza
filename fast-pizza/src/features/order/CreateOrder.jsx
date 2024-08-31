@@ -1,11 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
-// eslint-disable-next-line no-unused-vars
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import store from "../../store";
 import { createOrder } from "../../services/apiRestaurant";
 import { clearCart, getCart, getTotalCartPrice } from "../cart/cartSlice";
+import { fetchAddress } from "../user/userSlice";
 import { formatCurrency } from "../../utils/helpers";
 import Button from "../../ui/Button";
 import EmptyCart from "../cart/EmptyCart";
@@ -26,11 +26,13 @@ function CreateOrder() {
   const totalPrice = totalCartPrice + priorityPrice;
   const isSubmitting = navigation.state === "submitting";
   const formErrors = useActionData();
+  const dispatch = useDispatch();
 
   if (cart.length === 0) return <EmptyCart />;
   return (
     <div className="px-4 py-6">
       <h2 className="mb-8 text-xl font-semibold">Ready to order? Let's go!</h2>
+      <button onClick={() => dispatch(fetchAddress())}>get location</button>
 
       {/* <Form method="POST" action="/order/new"> */}
       <Form method="POST">
